@@ -5,10 +5,12 @@
 #include <sys/param.h>
 #include <mpi.h>
 
+//Initialize the number of processes to be spawned
 #define NUM_PROCESSES 128
 
 int main(int argc, char* argv[])
 {
+    //Initialization of parameters of the MPI application
     int msg, rc;
     MPI_Comm parent, child;
     int rank, size;
@@ -53,11 +55,13 @@ int main(int argc, char* argv[])
             msg = 38;
             MPI_Send(&msg, 1, MPI_INT, 0, 1, child);
         }
+        // Disconnect from the intercommunicator with the child processes
         MPI_Comm_disconnect(&child);
     }
     
     // Child Process
     else {
+        // Initialize the child processes
         MPI_Comm_rank(MPI_COMM_WORLD, &rank);
         MPI_Comm_size(MPI_COMM_WORLD, &size);
         pid = getpid();
@@ -66,6 +70,7 @@ int main(int argc, char* argv[])
         if (0 == rank) {
             MPI_Recv(&msg, 1, MPI_INT, 0, 1, parent, MPI_STATUS_IGNORE);
         }
+        // Disconnect from the intercommunicator with the parent processes
         MPI_Comm_disconnect(&parent);
     }
 
