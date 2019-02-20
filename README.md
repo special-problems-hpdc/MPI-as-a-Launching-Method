@@ -51,3 +51,13 @@ Using this function, two processes with an existing TCP/IP connection establish 
 ```
 int MPI_Comm_join(int fd, MPI_Comm *intercomm)
 ```
+
+## Experiment
+
+To run the experiments, we use the HPC machine Comet, which is a dedicated XSEDE cluster and has Mellanox FDR InfiniBand interconnects and Aeon storage. The standard compute nodes of the cluster consist of Intel Xeon E5-2680v3 (formerly codenamed Haswell) processors, 128GB DDR4 DRAM (64 GB per socket), and 320 GB of SSD local scratch memory. As the default InfiniBand transport mode is UD (Unreliable Datagram), this mode is used, as it ensures faster communication (latency as low as 0.7 microseconds).
+
+We used the two MPI implementations 
+- MVAPICH 2.3 
+- Open MPI 4.0
+
+to spawn processes across the nodes and compare their spawn rates and the spawn latency. We started with number of processes from 1 and went till 128 by factors of 2. We could not go for more processes due to unavailability of nodes. We ran 10 runs for each process and plotted the graphs based on the data we obtained.
