@@ -23,31 +23,31 @@ This function spawns up to maxprocs instances of a single MPI application. This 
 * Next is the address of the new intercommunicator to be filled in,
 * And finally an array of error codes for examining possible problems in starting the new processes. Here we use MPI_ERRCODES_IGNORE to indicate that we will not be looking at these error codes
 
-'''
+```
 int MPI_Comm_spawn(const char *command, char *argv[], int maxprocs,
     MPI_Info info, int root, MPI_Comm comm,
     MPI_Comm *intercomm, int array_of_errcodes[])
-'''
+```
 ￼
 ###### MPI_Comm_accept
 This function allows the MPI processes to wait for a request on the given port to form a new intercommunicator with the process connecting to the port.
 
-'''
+```
 int MPI_Comm_accept(const char *port_name, MPI_Info info, int root, MPI_Comm
     comm, MPI_Comm *newcomm)
-'''
+```
 ￼
 ###### MPI_Comm_connect
 This function allows the MPI process to connect to the given port. The process group once executes this function establishes a connection with another process group.
 
-'''
+```
 int MPI_Comm_connect(const char *port_name, MPI_Info info, int root,
     MPI_Comm comm, MPI_Comm *newcomm)
-'''
+```
 ￼
 ###### MPI_Comm_Join
 Using this function, two processes with an existing TCP/IP connection establish an inter-communicator and start MPI message exchange.
 
-'''
+```
 int MPI_Comm_join(int fd, MPI_Comm *intercomm)
-'''
+```
