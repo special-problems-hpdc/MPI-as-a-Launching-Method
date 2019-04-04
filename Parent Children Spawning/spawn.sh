@@ -6,10 +6,11 @@
 #SBATCH --nodes=6
 #SBATCH --ntasks-per-node=24
 #SBATCH --export=ALL
-#SBATCH -t 01:00:00
+#SBATCH -t 00:30:00
 
 module unload mvapich2_ib/2.1
-export PATH=$PATH:$HOME/mvapich2.3/bin
+export PATH=$PATH:$HOME/install/mvapich2.3/bin
+export GMON_OUT_PREFIX=gmon.out
 
 SCHEDULER=`hostname`
 echo SCHEDULER: $SCHEDULER
@@ -24,9 +25,11 @@ for host  in ${hostnodes:11}; do
     echo $host".sdsc.edu" >> slaves
 done
 
-for i in {1..10}; do
-        mpirun_rsh --hostfile slaves --np 1 MV2_SUPPORT_DPM=1 ./spawn >> data.csv
+for((i = 0; i <= 128; i *= 2)); do
+    for j in {1..10}; do
+        mpirun_rsh --hostfile slaves --np 1 MV2_SUPPORT_DPM=1 ./parent $i >> data$i.csv
         sleep 5
+    done
 done
 
 echo 'Finished'
